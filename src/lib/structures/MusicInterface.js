@@ -6,8 +6,6 @@ class MusicInterface {
 
         this.textChannel = null;
         this.queue = [];
-        this.playing = false;
-        this.paused = false;
         this.looping = false;
     }
 
@@ -30,9 +28,8 @@ class MusicInterface {
      * @returns {MusicInterface}
      */
     async leave(force = true) {
-        if (this.player && (this.playing || force)) this.player.stop();
+        if (this.player && (this.playing || force)) await this.player.stop();
         await this.client.lavalink.leave(this.guild.id);
-        this.playing = false;
         return this;
     }
 
@@ -45,9 +42,8 @@ class MusicInterface {
         else if (!this.queue.length) throw "Can't play songs from an empty queue.";
 
         const [song] = this.queue;
-        this.player.play(song.track);
+        await this.player.play(song.track);
         if (this.client.config.main.patreon) this.player.volume(this.volume);
-        this.playing = true;
         return this.player;
     }
 
@@ -55,10 +51,9 @@ class MusicInterface {
      * Pause/Resume the player
      * @returns {boolean}
      */
-    pause() {
+    async pause() {
         if (!this.player) return false;
-        this.player.pause(!this.paused);
-        this.paused = !this.paused;
+        await this.player.pause(!this.paused);
         return true;
     }
 
@@ -67,8 +62,8 @@ class MusicInterface {
      * @param {boolean} force Force skip option
      * @returns {MusicInterface}
      */
-    skip(force = true) {
-        if (this.player && force) this.player.stop();
+    async skip(force = true) {
+        if (this.player && force) await this.player.stop();
         else this.queue.shift();
         return this;
     }
@@ -88,12 +83,10 @@ class MusicInterface {
      */
     async destroy() {
         this.queue = [];
-        this.playing = null;
-        this.paused = null;
         this.textChannel = null;
         this.looping = null;
 
-        if (this.player) this.player.destroy();
+        if (this.player) await this.player.destroy();
         await this.leave();
         this.client.music.delete(this.guild.id);
     }
@@ -103,7 +96,7 @@ class MusicInterface {
     }
 
     get player() {
-        return this.client.lavalink.get(this.guild.id) || null;
+        return this.client.lavalink.players.get(this.guild.id) || null;
     }
 
     get volume() {
@@ -115,13 +108,15 @@ class MusicInterface {
      * @returns {LavalinkNode}
      */
     get idealNode() {
-        const nodes = this.client.lavalink.nodes.filter(node => node.ready);
-        const selectedNode = nodes.sort((a, b) => {
-            const aload = a.stats.cpu ? (a.stats.cpu.systemLoad / a.stats.cpu.cores) * 100 : 0;
-            const bload = b.stats.cpu ? (b.stats.cpu.systemLoad / b.stats.cpu.cores) * 100 : 0;
-            return aload - bload;
-        }).first();
-        return selectedNode || nodes.first();
+        return this.client.lavalink.idealNodes.first();
+    }
+
+    get paused() {
+        return this.player.paused;
+    }
+
+    get playing() {
+        return this.player.playing;
     }
 
     /**
@@ -130,7 +125,7 @@ class MusicInterface {
      * @returns {boolean}
      */
     isListening(member) {
-        return !member.voice.deaf && member.voice.channel.id === this.voice.channel.id;
+        return this.voiceChannel && !member.voice.deaf && member.voice.channel.id === this.voiceChannel.id;
     }
 
 }
