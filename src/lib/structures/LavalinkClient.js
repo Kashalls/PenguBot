@@ -1,11 +1,12 @@
-const snekfetch = require("snekfetch");
+const fetch = require("node-fetch");
 const { PlayerManager } = require("discord.js-lavalink");
 
 class LavalinkClient extends PlayerManager {
 
     constructor(...args) {
         super(...args);
-        this.defaultRegions = {
+
+        this.regions = {
             asia: ["sydney", "singapore", "japan", "hongkong"],
             eu: ["london", "frankfurt", "amsterdam", "russia", "eu-central", "eu-west"],
             us: ["us-central", "us-west", "us-east", "us-south", "brazil"]
@@ -14,20 +15,20 @@ class LavalinkClient extends PlayerManager {
 
     /**
      * Search for tracks from lavalink rest api
-     * @param {Object} node The node to use to query the track
+     * @param {LavalinkNode} node The node to use to query the track
      * @param {string} search Search query
-     * @returns {Promise<?Array<Object>>}
+     * @returns {Promise<any>}
      */
-    getSongs(node, search) {
-        if (!node) node = this.client.lavalink.nodes.first();
-        return snekfetch.get(`http://${node.host}:${node.port}/loadtracks`)
-            .set("Authorization", node.password)
-            .query({ identifier: search })
-            .then(res => res.body)
+    getSongs(node = this.nodes.first(), search) {
+        const params = new URLSearchParams();
+        params.append("identifier", search);
+
+        return fetch(`http://${node.host}:${node.port}/loadtracks?${params}`, { headers: { Authorization: node.password } })
+            .then(res => res.json())
             .catch(error => {
                 Error.captureStackTrace(error);
                 this.client.console.error(error);
-                return [];
+                return {};
             });
     }
 
@@ -38,14 +39,12 @@ class LavalinkClient extends PlayerManager {
      */
     getIdealRegion(region) {
         region = region.replace("vip-", "");
-        for (const key of Object.keys(this.defaultRegions)) {
-            const nodes = this.nodes.filter(node => node.ready && node.region === key);
+        for (const key of Object.keys(this.regions)) {
+            const nodes = this.idealNodes.filter(node => node.options.region === key);
             if (!nodes) continue;
-            for (const id of this.defaultRegions[key]) {
-                if (region.includes(id)) return key;
-            }
+            for (const id of this.regions[key]) if (region.includes(id)) return key;
         }
-        return this.nodes.filter(node => node.ready).first().region;
+        return this.idealNodes.first().host;
     }
 
 }

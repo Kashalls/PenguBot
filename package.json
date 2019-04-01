@@ -33,7 +33,7 @@
     "canvas-constructor": "github:kyranet/canvasConstructor",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "discordjs/discord.js",
-    "discord.js-lavalink": "github:MrJacz/discord.js-lavalink",
+    "discord.js-lavalink": "mrjacz/discord.js-lavalink#v3",
     "erlpack": "github:discordapp/erlpack",
     "google-translate-api": "^2.3.0",
     "hot-shots": "^6.1.1",
