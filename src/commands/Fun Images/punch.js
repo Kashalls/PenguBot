@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const { MessageEmbed } = require("discord.js");
 
 const punches = ["http://i.imgur.com/aGPHQ3E.gif", "http://i.imgur.com/FxFfdOZ.gif", "http://i.imgur.com/XA7PPiy.gif",

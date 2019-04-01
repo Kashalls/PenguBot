@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const { MessageEmbed } = require("discord.js");
 
 const cookies = ["http://i.imgur.com/SLwEY66.gif", "http://i.imgur.com/K6VoNp3.gif", "http://i.imgur.com/knVM6Lb.gif",

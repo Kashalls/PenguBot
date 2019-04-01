@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const data = require("../../lib/constants/nsfw/pantyhose");
 
 module.exports = class extends Command {

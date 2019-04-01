@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const filterLevels = ["Off", "No Role", "Everyone"];
 const verificationLevels = ["None", "Low", "Medium", "(╯°□°）╯︵ ┻━┻", "┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻"];
 const { MessageEmbed } = require("discord.js");

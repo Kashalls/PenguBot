@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const { Argument } = require("klasa");
 const { MessageEmbed } = require("discord.js");
 

@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const { get } = require("snekfetch");
 const { load } = require("cheerio");
 const { MessageEmbed } = require("discord.js");

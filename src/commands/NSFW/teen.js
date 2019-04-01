@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const subReddits = ["legalteens", "collegesluts", "adorableporn", "legalteensXXX", "gonewild18", "18_19", "just18"];
 
 module.exports = class extends Command {

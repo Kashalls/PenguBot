@@ -18,7 +18,7 @@ module.exports = {
     discordVersion: discord.version,
     klasaConstants: klasa.constants,
     discordConstants: discord.Constants,
-    Command: require("./lib/structures/KlasaCommand"),
+    Command: require("./lib/structures/PenguCommand"),
     Song: require("./lib/structures/Song"),
     RawEvent: require("./lib/structures/RawEvent")
 };

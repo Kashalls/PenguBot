@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const choices = ["rock", "paper", "scissors"];
 
 module.exports = class extends Command {

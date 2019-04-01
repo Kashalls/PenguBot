@@ -26,7 +26,7 @@ const sharder = new ShardingManager(join(__dirname, "PenguBot"), {
             "PRESENCE_UPDATE"
         ],
         pieceDefaults: {
-            commands: { deletable: true, quotedStringSupport: true, bucket: 2 },
+            commands: { deletable: true, quotedStringSupport: true, bucket: 2, upvoteOnly: false, patronOnly: false },
             rawEvents: { enabled: true }
         },
         providers: {

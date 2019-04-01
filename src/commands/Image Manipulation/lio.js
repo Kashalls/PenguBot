@@ -1,4 +1,4 @@
-const Command = require("../../lib/structures/KlasaCommand");
+const Command = require("../../lib/structures/PenguCommand");
 const fs = require("fs-nextra");
 const { Canvas } = require("canvas-constructor");
 const { get } = require("snekfetch");
