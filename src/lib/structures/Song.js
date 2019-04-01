@@ -97,15 +97,15 @@ class Song {
          */
         this.position = data.info.position;
         /**
-         * The amount of skips for the song
-         * @type {Set}
-         */
-        this.skips = new Set();
-        /**
          * The Artwork URl of the song
          * @type {string}
          */
         this.artwork = data.info.artwork;
+        /**
+         * The amount of skips for the song
+         * @type {Set}
+         */
+        this.skips = new Set();
     }
 
     /**
