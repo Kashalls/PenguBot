@@ -18,13 +18,10 @@ module.exports = class extends MusicCommand {
         const { music } = msg.guild;
         if (!music.queue || !music.queue.length) return msg.sendMessage(`${this.client.emotes.cross} ***There are No Songs in the Queue at the momemnt.***`);
 
-        const vc = music.voiceChannel ? music.voiceChannel.members.size <= 4 : true;
-        if (await msg.hasAtLeastPermissionLevel(3) || vc) {
-            await music.destroy();
-            return msg.sendMessage(`${this.client.emotes.check} ***Queue cleared, leaving voice channel.***`);
-        } else {
-            return msg.sendMessage(`${this.client.emotes.cross} ***There are members in the VC right now, use skip instead!***`);
-        }
+        if (music.voiceChannel && music.voiceChannel.members.size <= 4) return msg.sendMessage(`${this.client.emotes.cross} ***There are members in the VC right now, use skip instead!***`);
+
+        await music.destroy();
+        return msg.sendMessage(`${this.client.emotes.check} ***Queue cleared, leaving voice channel.***`);
     }
 
 };

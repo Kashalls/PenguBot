@@ -12,7 +12,7 @@ module.exports = class extends Inhibitor {
 
         const force = "force" in msg.flags;
 
-        const m = await msg.guild.members.fetch(msg.author).catch(() => null);
+        const m = await msg.guild.members.fetch(msg.author.id).catch(() => null);
         if (!m) throw "There was a technical oopsie, please try again!";
 
         if ((!msg.member.voice.channel && !force) || !msg.member.voice) throw "You are not connected in a voice channel.";

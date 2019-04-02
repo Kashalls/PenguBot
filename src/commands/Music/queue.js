@@ -16,20 +16,19 @@ module.exports = class extends MusicCommand {
 
     async run(msg) {
         const { music } = msg.guild;
-        const { queue } = music;
         if (!music.playing) return msg.sendMessage(`${this.client.emotes.cross} ***${msg.language.get("MUSICIF_SONG_NOT_FOUND")}***`);
 
         const pages = new RichDisplay(new MessageEmbed()
             .setTitle(`${msg.language.get("MUSICIF_QUEUE_TITLE")}`)
             .setAuthor(`PenguBot - Music Queue`, "https://i.imgur.com/IS8hX4t.png")
             .setDescription(`"${msg.language.get("MUSICIF_QUEUE_HINT")}`)
-            .setColor("#428bca")
-        );
+            .setColor("#428bca"));
 
-        for (let i = 0; i < queue.length; i += 12) {
-            const curr = queue.slice(i, i + 12);
-            pages.addPage(t => t.setDescription(curr.map(y => `\`${queue.findIndex(s => s.id === y.id) + 1}\` [${y.title.replace(/\*/g, "\\*")}](${y.url}) (${y.friendlyDuration})`).join("\n")));
+        for (let i = 0; i < music.queue.length; i += 12) {
+            const curr = music.queue.slice(i, i + 12);
+            pages.addPage(t => t.setDescription(curr.map(y => `\`${music.queue.findIndex(s => s.id === y.id) + 1}\` [${y.title.replace(/\*/g, "\\*")}](${y.url}) (${y.friendlyDuration})`).join("\n")));
         }
+
         pages.run(await msg.sendMessage(`${this.client.emotes.loading} ${msg.language.get("MUSICIF_QUEUE_LOADING")}`), {
             time: 120000,
             filter: (reaction, user) => user === msg.author

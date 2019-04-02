@@ -15,11 +15,11 @@ module.exports = class extends MusicCommand {
 
     async run(msg) {
         const { music } = msg.guild;
-        const { queue } = music;
-        if (!music.playing || !queue.length) return msg.sendMessage(`${this.client.emotes.cross} ***There's currently no music playing!***`);
+        if (!music.playing || !music.queue.length) return msg.sendMessage(`${this.client.emotes.cross} ***There's currently no music playing!***`);
 
-        const [song] = queue;
+        const [song] = music.queue;
         if (!song) return msg.sendMessage(`${this.client.emotes.cross} ***Song not found, please try with a different one.***`);
+
         const embed = new MessageEmbed()
             .setColor("#5bc0de")
             .setTitle("⏯ | Now Playing - PenguBot")
@@ -30,8 +30,7 @@ module.exports = class extends MusicCommand {
 • **Duration:** ${song.friendlyDuration}
 • **Requested By:** ${song.requester}
 • **Link:** ${song.url}`);
-        if (!msg.author.send) return msg.sendMessage(`${this.client.emotes.cross} ***${msg.language.get("ER_NO_DM")}***`);
-        return msg.author.send({ embed }).catch(() => null);
+        return msg.author.send({ embed }).catch(() => msg.sendMessage(`${this.client.emotes.cross} ***${msg.language.get("ER_NO_DM")}***`));
     }
 
 };

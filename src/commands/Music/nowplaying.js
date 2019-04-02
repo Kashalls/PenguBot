@@ -15,12 +15,11 @@ module.exports = class extends MusicCommand {
 
     async run(msg) {
         const { music } = msg.guild;
-        const { queue } = music;
         if (!music.playing) return msg.sendMessage(`${this.client.emotes.cross} ***${msg.language.get("MUSICIF_NO_MUSIC_PLAYING")}***`);
 
-        const [song] = queue;
+        const [song] = music.queue;
         if (!song) return msg.sendMessage(`${this.client.emotes.cross} ***${msg.language.get("MUSICIF_SONG_NOT_FOUND")}***`);
-        const embed = new MessageEmbed()
+        return msg.sendEmbed(new MessageEmbed()
             .setColor("#5bc0de")
             .setTitle(`⏯ | ${msg.language.get("MUSICIF_NOW_PLAYING_TITLE")}`)
             .setTimestamp()
@@ -30,8 +29,7 @@ module.exports = class extends MusicCommand {
 • **${msg.language.get("MUSICIF_AUTHOR")}:** ${song.author}
 • **${msg.language.get("MUSICIF_SONG_LENGHT")}:** ${song.friendlyDuration}
 • **${msg.language.get("MUSICIF_SONG_REQUESTED_BY")}:** ${song.requester}
-• **${msg.language.get("MUSICIF_SONG_LINK")}:** ${song.url}`);
-        return msg.sendEmbed(embed);
+• **${msg.language.get("MUSICIF_SONG_LINK")}:** ${song.url}`));
     }
 
 };

@@ -19,8 +19,8 @@ module.exports = class extends MusicCommand {
     async run(msg) {
         const { music } = msg.guild;
         if (!music.playing) return msg.sendMessage(`${this.client.emotes.cross} There's currently no music playing!`);
-        music.pause();
-        return msg.sendMessage(`⏯ | ***PenguBot has ${music.paused ? "Paused" : "Resumed"} the music!***`);
+        await music.pause();
+        return msg.sendMessage(`⏯ | ***PenguBot has ${music.paused ? "paused" : "resumed"} the music!***`);
     }
 
 };

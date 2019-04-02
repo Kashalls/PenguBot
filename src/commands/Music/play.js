@@ -6,7 +6,6 @@ module.exports = class extends MusicCommand {
     constructor(...args) {
         super(...args, {
             requireDJ: true,
-            requireMusic: false,
             cooldown: 5,
             aliases: ["musicplay", "suona", "accoda", "joue", "toca", "spielt"],
             requiredPermissions: ["USE_EXTERNAL_EMOJIS", "EMBED_LINKS", "ATTACH_FILES"],
@@ -27,6 +26,7 @@ module.exports = class extends MusicCommand {
 
         const { channel } = msg.member.voice;
         if (!channel) throw "I'm sorry but you need to be in a voice channel to play some music!";
+
         this.resolvePermissions(msg, channel);
 
         return this.handle(msg, songs);
