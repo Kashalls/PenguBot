@@ -4,7 +4,7 @@ const config = require("../config.json");
 const PenguClient = require("./lib/structures/PenguClient");
 const { join } = require("path");
 
-const sharder = new ShardingManager(join(__dirname, "PenguBot"), {
+const sharder = new ShardingManager(join(__dirname, "PenguBot.js"), {
     token: config.main.token,
     client: PenguClient,
     clientOptions: {

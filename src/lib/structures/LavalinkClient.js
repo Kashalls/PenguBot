@@ -3,8 +3,10 @@ const { PlayerManager } = require("discord.js-lavalink");
 
 class LavalinkClient extends PlayerManager {
 
-    constructor(...args) {
-        super(...args);
+    constructor(client, nodes, options) {
+        super(client, nodes, options);
+
+        this.shards = options.shards;
 
         this.regions = {
             asia: ["sydney", "singapore", "japan", "hongkong"],
@@ -19,7 +21,7 @@ class LavalinkClient extends PlayerManager {
      * @param {string} search Search query
      * @returns {Promise<any>}
      */
-    getSongs(node = this.nodes.first(), search) {
+    getSongs(node = this.idealNodes.first(), search) {
         const params = new URLSearchParams();
         params.append("identifier", search);
 

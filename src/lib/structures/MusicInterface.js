@@ -5,6 +5,8 @@ class MusicInterface {
         Object.defineProperty(this, "guild", { value: guild });
 
         this.textChannel = null;
+        this.playing = false;
+        this.paused = false;
         this.queue = [];
         this.looping = false;
     }
@@ -30,6 +32,7 @@ class MusicInterface {
     async leave(force = true) {
         if (this.player && (this.playing || force)) await this.player.stop();
         await this.client.lavalink.leave(this.guild.id);
+        this.playing = false;
         return this;
     }
 
@@ -43,7 +46,8 @@ class MusicInterface {
 
         const [song] = this.queue;
         await this.player.play(song.track);
-        if (this.client.config.main.patreon) this.player.volume(this.volume);
+        if (this.client.config.main.patreon) await this.player.volume(this.volume);
+        this.playing = true;
         return this.player;
     }
 
@@ -54,6 +58,7 @@ class MusicInterface {
     async pause() {
         if (!this.player) return false;
         await this.player.pause(!this.paused);
+        this.paused = !this.paused;
         return true;
     }
 
@@ -83,6 +88,8 @@ class MusicInterface {
      */
     async destroy() {
         this.queue = [];
+        this.playing = null;
+        this.paused = null;
         this.textChannel = null;
         this.looping = null;
 
@@ -109,14 +116,6 @@ class MusicInterface {
      */
     get idealNode() {
         return this.client.lavalink.idealNodes.first();
-    }
-
-    get paused() {
-        return this.player.paused;
-    }
-
-    get playing() {
-        return this.player.playing;
     }
 
     /**
