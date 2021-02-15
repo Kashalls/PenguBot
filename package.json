@@ -44,7 +44,7 @@
     "klasa-member-gateway": "github:dirigeants/klasa-member-gateway",
     "kurasuta": "^0.2.17",
     "raven": "^2.6.4",
-    "rethinkdb-ts": "^2.4.0-rc.12",
+    "rethinkdb-ts": "^3.0.0-alpha.0",
     "twemoji": "^12.0.0",
     "zlib-sync": "^0.1.4"
   },
